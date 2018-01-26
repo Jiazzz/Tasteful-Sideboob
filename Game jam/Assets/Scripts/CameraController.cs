@@ -6,17 +6,22 @@ public class CameraController : MonoBehaviour {
 
     [SerializeField]
     private float cameraSpeed = 5f;
+    private Camera mainCamera;
+    private ArrayList players;
 
 	// Use this for initialization
 	void Start ()
     {
-		
+        mainCamera = this.GetComponent<Camera>();
+        players = new ArrayList(GameObject.FindGameObjectsWithTag("Player"));
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        ScrollUp(cameraSpeed);
+
+
+        //ScrollUp(cameraSpeed);
 	}
 
     private void ScrollUp(float speed)
