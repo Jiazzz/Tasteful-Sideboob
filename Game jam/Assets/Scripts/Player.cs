@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
+    static int health = 100;
+
     [SerializeField]
     float speed;
     [SerializeField]
@@ -15,10 +17,12 @@ public class Player : MonoBehaviour {
     string yAxis;
 
     [SerializeField]
-    float maxRange;
+    Transform otherPlayer;
 
     [SerializeField]
-    Transform otherPlayer;
+    GameObject gameManagerObject;
+
+    GameManager gameManager;
 
     bool canMove;
 
@@ -27,12 +31,13 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
+        gameManager = gameManagerObject.GetComponent<GameManager>();
         canMove = true;
 	}
 
     // Update is called once per frame
     void Update() {
-        if (Vector2.Distance(otherPlayer.position, transform.position) > maxRange)
+        if (Vector2.Distance(otherPlayer.position, transform.position) > gameManager.MaxRange)
         {
             EndGame();
         }
@@ -45,12 +50,6 @@ public class Player : MonoBehaviour {
         GetComponent<Collider2D>().enabled = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        //Take damage
-        Debug.Log("Damage");
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         StartCoroutine(HandleCollision(collision));
@@ -58,17 +57,18 @@ public class Player : MonoBehaviour {
 
     IEnumerator HandleCollision(Collision2D collision)
     {
-        //Take damage
+        //Take Damage
+        TakeDamage(5);
         //Bounce back
         canMove = false;
         ContactPoint2D contactPoint = collision.contacts[0];
         Debug.Log(contactPoint.normal);
         rb.AddForce(contactPoint.normal * 50);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         canMove = true;
         //Animation?
-        Debug.Log("Damage");
     }
+
 
     private void Move()
     {
@@ -80,6 +80,15 @@ public class Player : MonoBehaviour {
             Vector2 newVelocity = rb.velocity + inputVector * speed;
             if (newVelocity.magnitude <= maxSpeed)
                 rb.velocity = newVelocity;
+        }
+    }
+
+    void TakeDamage(int amount)
+    {
+        health -= amount;
+        if (health <= 0)
+        {
+            gameManager.GameOver();
         }
     }
 }
