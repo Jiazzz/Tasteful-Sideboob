@@ -35,7 +35,11 @@ public class Player : MonoBehaviour {
     [SerializeField]
     GameObject gameManagerObject;
 
+    [SerializeField]
+    AudioClip shootClip;
+
     GameManager gameManager;
+    SoundManager sm;
 
     bool canMove;
     bool invincible = false;
@@ -46,6 +50,7 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        sm = SoundManager.soundManager;
         rb = GetComponent<Rigidbody2D>();
         gameManager = gameManagerObject.GetComponent<GameManager>();
         canMove = true;
@@ -53,7 +58,7 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (otherVector2.Distance(otherPlayer.position, transform.position) > gameManager.MaxRange)
+        if (Vector2.Distance(otherPlayer.position, transform.position) > gameManager.MaxRange)
         {
             EndGame();
         }
@@ -81,6 +86,7 @@ public class Player : MonoBehaviour {
 
     IEnumerator HandleCollision(Collision2D collision)
     {
+        sm.Play(sm.playerHit);
         //Bounce back
         canMove = false;
         ContactPoint2D contactPoint = collision.contacts[0];
@@ -115,12 +121,14 @@ public class Player : MonoBehaviour {
             rb.AddForce(transform.up * speed * yInput);
 
             float rotateAmount = xInput;
-            rb.angularVelocity = -rotateAmount * rotSpeed;
+
+                rb.angularVelocity = -rotateAmount * rotSpeed;
         }
     }
 
     void Shoot()
     {
+        sm.Play(shootClip);
         GameObject bullet = Instantiate(bulletPrefab, barrel.position, barrel.rotation);
     }
 
@@ -129,8 +137,8 @@ public class Player : MonoBehaviour {
         health -= amount;
         if (health <= 0)
         {
-            gameManager.RespawnPlayer(this.gameObject, id);
-            Destroy(gameObject);
+            //gameManager.RespawnPlayer(this.gameObject, id);
+            //Destroy(gameObject);
         }
     }
 
