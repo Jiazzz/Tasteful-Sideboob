@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
+    float speed = 5;
+
+	void LateUpdate () {
+        transform.Translate(transform.up * speed * Time.deltaTime);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Destroy(gameObject);
+    }
 }
