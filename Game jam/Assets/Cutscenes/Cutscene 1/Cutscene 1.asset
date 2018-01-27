@@ -9,8 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c768b6a7ef9c582498ee30658cbcf510, type: 3}
-  m_Name: Testcutscene
+  m_Name: Cutscene 1
   m_EditorClassIdentifier: 
   cutsceneImages:
-  - {fileID: 1493988288566910, guid: 098a8654752ab4444aa4fb5638ba7fc5, type: 2}
-  - {fileID: 1493988288566910, guid: ad2532ce2323fbc40822df16490d6c46, type: 2}
+  - {fileID: 1180842911089436, guid: c50de9dcfb3eb2f48abe6ce01abba248, type: 2}
+  - {fileID: 1359711298970478, guid: 3c843956f1ad9974c97c966102e4c8b5, type: 2}
+  - {fileID: 1759236811545636, guid: 39e88b41a0be5b9449ac0a26cc0d2ba5, type: 2}

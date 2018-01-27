@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-    int health = 10;
+    int health = 100;
 
     [SerializeField]
     int id;
@@ -58,6 +58,19 @@ public class Player : MonoBehaviour {
         set
         {
             id = value;
+        }
+    }
+
+    public int Health
+    {
+        get
+        {
+            return health;
+        }
+
+        set
+        {
+            health = value;
         }
     }
 

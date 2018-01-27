@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -12,6 +13,11 @@ public class GameManager : MonoBehaviour {
 
     List<GameObject> players;
     int playerLives;
+
+    [SerializeField]
+    Text hp1Text, hp2Text, livesText;
+
+
 
     Camera mainCamera;
 
@@ -31,6 +37,15 @@ public class GameManager : MonoBehaviour {
         }
         playerLives = 3;
         mainCamera = FindObjectOfType<Camera>();
+        SetHP1Text();
+        SetHP2Text();
+    }
+
+    private void Update()
+    {
+        livesText.text = playerLives.ToString();
+        SetHP1Text();
+        SetHP2Text();
     }
 
     public void LoadLevel(int index)
@@ -80,4 +95,16 @@ public class GameManager : MonoBehaviour {
             GameOver();
         }
     }
+
+    public void SetHP1Text()
+    {
+        hp1Text.text = "Player 1: " + players[0].GetComponent<Player>().Health + "/100";
+    }
+
+    public void SetHP2Text()
+    {
+        hp2Text.text = "Player 2: " + players[1].GetComponent<Player>().Health + "/100";
+    }
+
+
 }
