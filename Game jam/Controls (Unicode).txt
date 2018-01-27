@@ -1,0 +1,8 @@
+Controls:
+
+Player 1	Player 2
+W/S 		↑/↓			Move forward/backward 	
+A/D 		←/→			Turn left/right
+Space		Right Ctrl	Shoot
+
+Esc						Pause
