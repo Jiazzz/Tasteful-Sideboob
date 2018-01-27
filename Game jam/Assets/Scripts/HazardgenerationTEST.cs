@@ -48,24 +48,31 @@ parameters:
     GameManager gameManager;
 
 
-	void TotalGenerateHazards()
+	void InitialGenerateHazards()
 	{
 		int strtobj = 4;
-		int desspwn = 2;
-		int nmrspwn = 2;
 		GenerateHazards(strtobj);
-		// TODO: count destroyed hazard objects
-		if (cntdes = desspwn)
-		{
-			for (j=0, j < nmrspwn, j++)
-			{
-				int cntspwn = GenerateHazards(nmrspwn);
-				cntdes = 0;
+	}
+	
+	void Update()			// Hmz, ik wil eigenlijk dat hij in de dieper liggende IF de destroyed status checked, dit voelt niet als een method for in Update... 
+	{
+		int spwninc = 3;	// na hoeveel spawn cycles aantal spawns wordt verhoogd, 1 hard
+		int desspwn = 2;	// na hoeveel hazards destroyed nieuwe hazards spawnen
+		int nmrspwn = 2;	// aantal spawns per spawn cycle, 1 easy
+		while (level != finished){		
+			for (i=0, i < spwninc, i++){
+				for (j=0, j < desspwn, j++){
+					// TODO: count destroyed hazard objects
+					if (cntdes = desspwn){
+						GenerateHazards(nmrspwn);
+					}
+				}
 			}
+			nmrspwn++;
 		}
 	}
 	
-	int GenerateHazards(int nmrspwn)
+	void GenerateHazards(int nmrspwn)
 	{
 		//TODO, zorg ervoor dat elke opvolgende xpos niet in de collection van vorige xpos zit
 		int cntspwn = 0;
@@ -80,8 +87,6 @@ parameters:
 			}	
 			SpawnHazard(objID, xpos);	
 		}
-		cntspwn++;
-		return cntspwn;
 	}
 
     void SpawnHazard(string hazard, int xposition)
