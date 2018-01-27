@@ -8,36 +8,18 @@ public class CameraController : MonoBehaviour {
     float cameraSpeed = 5f;
 
     [SerializeField]
-    float maxZoomDistance = 3;
-
-    [SerializeField]
-    float minOrthographic = 1;
-
-    [SerializeField]
-    float cameraSmoothTime = 0.3f;
-
-    [SerializeField]
     bool scroll = false;
 
-    float zoomValue = 1;
-
-    Camera mainCamera;
     List<GameObject> players;
-    float standardOrthographic;
-    float standardSpeed;
-    bool zooming = false;
 
 	// Use this for initialization
 	void Start ()
     {
-        mainCamera = this.GetComponent<Camera>();
         players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
         if(players.Count == 0)
         {
             Debug.LogError("No players were found");
         }
-        standardOrthographic = mainCamera.orthographicSize;
-        standardSpeed = cameraSpeed;
 	}
 	
 	// Update is called once per frame
@@ -47,51 +29,11 @@ public class CameraController : MonoBehaviour {
         {
             ScrollUp(cameraSpeed);
         }
-        Zoom();
 	}
 
     void ScrollUp(float speed)
     {
         Vector3 newLocation = new Vector3(transform.position.x, transform.position.y + speed * Time.deltaTime, transform.position.z);
         transform.position = newLocation;
-    }
-
-    void Zoom()
-    {
-        if (Vector3.Distance(players[0].transform.position, players[1].transform.position) <= maxZoomDistance)
-        {
-            cameraSpeed = standardSpeed / 2;
-            zoomValue = ZoomValue();
-            if(zoomValue * standardOrthographic < minOrthographic)
-            {
-                mainCamera.orthographicSize = minOrthographic;
-            }
-            else
-            {
-                mainCamera.orthographicSize = zoomValue * standardOrthographic;
-            }
-
-            float AvgX = Average(players[0].transform.position.x, players[1].transform.position.x);
-            float AvgY = Average(players[0].transform.position.y, players[1].transform.position.y);
-
-            if (!zooming)
-            {
-                Vector3 newPosition = new Vector3(AvgX, AvgY, transform.position.z);
-                Vector3 velocity = Vector3.zero;
-                transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref velocity, cameraSmoothTime);
-                zooming = true;
-            }
-
-        }
-    }
-
-    float ZoomValue()
-    {
-        return Vector3.Distance(players[0].transform.position, players[1].transform.position) / maxZoomDistance;
-    }
-
-    float Average(float a, float b)
-    {
-        return (a + b) / 2;
     }
 }
