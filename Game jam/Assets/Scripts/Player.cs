@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-    int health = 100;
-    int lives = 3;
+    int health = 10;
+
+    [SerializeField]
+    int id;
 
     [SerializeField]
     float speed;
@@ -38,6 +40,7 @@ public class Player : MonoBehaviour {
     bool canMove;
     bool invincible = false;
     float invincibleTimer;
+    float blinkTime = 0.1f;
 
     Rigidbody2D rb;
 
@@ -50,15 +53,7 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (invincible)
-        {
-            invincibleTimer -= Time.deltaTime;
-            if(invincibleTimer <= 0)
-            {
-                invincible = false;
-            }
-        }
-        if (Vector2.Distance(otherPlayer.position, transform.position) > gameManager.MaxRange)
+        if (otherVector2.Distance(otherPlayer.position, transform.position) > gameManager.MaxRange)
         {
             EndGame();
         }
@@ -86,16 +81,26 @@ public class Player : MonoBehaviour {
 
     IEnumerator HandleCollision(Collision2D collision)
     {
-        //Take Damage
-        TakeDamage(5);
         //Bounce back
         canMove = false;
         ContactPoint2D contactPoint = collision.contacts[0];
-        Debug.Log(contactPoint.normal);
         rb.AddForce(contactPoint.normal * 50);
         yield return new WaitForSeconds(1);
         canMove = true;
         //Animation?
+
+        //Take Damage
+        TakeDamage(5);
+    }
+
+    IEnumerator HandleInvincibility(int seconds)
+    {
+        float amount = seconds / blinkTime;
+        for (int i = 0; i < amount; i++)
+        {
+            GetComponent<SpriteRenderer>().enabled = !GetComponent<SpriteRenderer>().enabled;
+            yield return new WaitForSeconds(blinkTime);
+        }
     }
 
 
@@ -124,15 +129,8 @@ public class Player : MonoBehaviour {
         health -= amount;
         if (health <= 0)
         {
-            lives--;
-            if(lives <= 0)
-            {
-                gameManager.GameOver();
-            }
-            else
-            {
-
-            }
+            gameManager.RespawnPlayer(this.gameObject, id);
+            Destroy(gameObject);
         }
     }
 
@@ -156,6 +154,6 @@ public class Player : MonoBehaviour {
     public void SetInvincible(int seconds)
     {
         invincible = true;
-        invincibleTimer = seconds;
+        StartCoroutine(HandleInvincibility(seconds));
     }
 }

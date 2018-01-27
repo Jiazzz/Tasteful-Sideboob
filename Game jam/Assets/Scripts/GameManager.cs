@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour {
     int respawnInvincibilityTime = 2;
 
     List<GameObject> players;
+    int[] playerLives;
 
     Camera mainCamera;
 
@@ -21,6 +22,11 @@ public class GameManager : MonoBehaviour {
         {
             Debug.LogError("No players were found.");
         }
+        playerLives = new int[players.Count];
+        for (int i = 0; i < playerLives.Length; i++)
+        {
+            playerLives[i] = 3;
+        } 
         mainCamera = FindObjectOfType<Camera>();
     }
 
@@ -60,9 +66,15 @@ public class GameManager : MonoBehaviour {
         set { maxRange = value; }
     }
 
-    void RespawnPlayer(GameObject go)
+    public void RespawnPlayer(GameObject go, int id)
     {
         GameObject spawnedPlayer = Instantiate(go, new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y), Quaternion.identity);
         spawnedPlayer.GetComponent<Player>().SetInvincible(respawnInvincibilityTime);
+        playerLives[id]--;
+        if (playerLives[id]<=0)
+        {
+            //TODO: Animate or something I don't know, not creative
+            GameOver();
+        }
     }
 }
