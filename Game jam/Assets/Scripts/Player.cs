@@ -15,6 +15,16 @@ public class Player : MonoBehaviour {
     string xAxis;
     [SerializeField]
     string yAxis;
+    [SerializeField]
+    string fireInput;
+
+    [SerializeField]
+    Transform barrel;
+    [SerializeField]
+    GameObject bulletPrefab;
+
+    [SerializeField]
+    float rotSpeed;
 
     [SerializeField]
     Transform otherPlayer;
@@ -42,6 +52,10 @@ public class Player : MonoBehaviour {
             EndGame();
         }
         Move();
+        if (Input.GetButtonDown(fireInput))
+        {
+            Shoot();
+        }
 	}
 
     void EndGame()
@@ -77,10 +91,17 @@ public class Player : MonoBehaviour {
         Vector2 inputVector = new Vector2(xInput, yInput);
         if (canMove && inputVector != Vector2.zero)
         {
-            Vector2 newVelocity = rb.velocity + inputVector * speed;
-            if (newVelocity.magnitude <= maxSpeed)
-                rb.velocity = newVelocity;
+            if(rb.velocity.magnitude<=maxSpeed)
+            rb.AddForce(transform.up * speed * yInput);
+
+            float rotateAmount = xInput;
+            rb.angularVelocity = -rotateAmount * rotSpeed;
         }
+    }
+
+    void Shoot()
+    {
+        GameObject bullet = Instantiate(bulletPrefab, barrel.position, barrel.rotation);
     }
 
     void TakeDamage(int amount)
@@ -107,6 +128,5 @@ public class Player : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
     }
 }

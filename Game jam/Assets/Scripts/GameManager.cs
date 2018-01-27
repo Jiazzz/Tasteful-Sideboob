@@ -6,8 +6,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 
     [SerializeField]
-    int health;
-    [SerializeField]
     float maxRange;
 
     public void LoadLevel(int index)
@@ -33,12 +31,6 @@ public class GameManager : MonoBehaviour {
     public void GameOver()
     {
         LoadLevel("GameOver");
-    }
-
-    public int Health
-    {
-        get{ return health; }
-        set { health = value; }
     }
 
     public float MaxRange
