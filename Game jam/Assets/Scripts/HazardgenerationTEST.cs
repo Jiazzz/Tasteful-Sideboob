@@ -27,6 +27,7 @@ parameters:
 - pwrupID (0 =, 1 =)
 - int pwrspwn						// Destroyed objects needed for powerup, change if spawn event
 */
+/*
 
     [SerializeField]
     int id;
@@ -89,4 +90,5 @@ parameters:
 		position.y = -20	
         GameObject hazard = Instantiate(hazard, position, 0);
     }
+    */
 }

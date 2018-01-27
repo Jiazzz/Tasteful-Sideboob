@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager gameManager;
 
+    SoundManager soundManager;
+
     private void Awake()
     {
         gameManager = this;
@@ -31,7 +33,7 @@ public class GameManager : MonoBehaviour {
 
     void Start()
     {
-        //players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
+        soundManager = SoundManager.soundManager;
         if(players.Count == 0)
         {
             Debug.LogError("No players were found.");
@@ -40,6 +42,7 @@ public class GameManager : MonoBehaviour {
         mainCamera = FindObjectOfType<Camera>();
         SetHP1Text();
         SetHP2Text();
+        soundManager.Loop(soundManager.backgroundMusic);
     }
 
     private void Update()
