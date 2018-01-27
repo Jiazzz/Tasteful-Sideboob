@@ -48,8 +48,21 @@ public class Player : MonoBehaviour {
 
     Rigidbody2D rb;
 
-	// Use this for initialization
-	void Start () {
+    public int Id
+    {
+        get
+        {
+            return id;
+        }
+
+        set
+        {
+            id = value;
+        }
+    }
+
+    // Use this for initialization
+    void Start () {
         sm = SoundManager.soundManager;
         rb = GetComponent<Rigidbody2D>();
         gameManager = gameManagerObject.GetComponent<GameManager>();
@@ -138,7 +151,7 @@ public class Player : MonoBehaviour {
         health -= amount;
         if (health <= 0)
         {
-            gameManager.RespawnPlayer(this.gameObject, id);
+            gameManager.RespawnPlayer(this.gameObject);
             Destroy(gameObject);
         }
     }
