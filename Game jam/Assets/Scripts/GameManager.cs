@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     int respawnInvincibilityTime = 2;
 
+    [SerializeField]
     List<GameObject> players;
     int playerLives;
 
@@ -30,7 +31,7 @@ public class GameManager : MonoBehaviour {
 
     void Start()
     {
-        players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
+        //players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
         if(players.Count == 0)
         {
             Debug.LogError("No players were found.");
@@ -81,13 +82,14 @@ public class GameManager : MonoBehaviour {
 
     public void IncreaseLife()
     {
-        //playerLives++;
+        playerLives++;
     }
 
-    public void RespawnPlayer(GameObject go)
+    public void RespawnPlayer(GameObject go, int id)
     {
         GameObject spawnedPlayer = Instantiate(go, new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y), Quaternion.identity);
         spawnedPlayer.GetComponent<Player>().SetInvincible(respawnInvincibilityTime);
+        players[id] = spawnedPlayer;
         playerLives--;
         if (playerLives<=0)
         {

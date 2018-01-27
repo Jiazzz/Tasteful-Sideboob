@@ -134,6 +134,7 @@ public class Player : MonoBehaviour {
             yield return new WaitForSeconds(blinkTime);
         }
         invincible = false;
+        GetComponent<Collider2D>().enabled = true;
     }
 
 
@@ -164,7 +165,7 @@ public class Player : MonoBehaviour {
         health -= amount;
         if (health <= 0)
         {
-            gameManager.RespawnPlayer(this.gameObject);
+            gameManager.RespawnPlayer(this.gameObject, id);
             Destroy(gameObject);
         }
     }
@@ -189,6 +190,7 @@ public class Player : MonoBehaviour {
     public void SetInvincible(int seconds)
     {
         invincible = true;
+        GetComponent<Collider2D>().enabled = false;
         StartCoroutine(HandleInvincibility(seconds));
     }
 }
