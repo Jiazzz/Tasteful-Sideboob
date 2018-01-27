@@ -22,6 +22,8 @@ public class CutsceneManager : MonoBehaviour {
 
     private void OnEnable()
     {
+        image = GetComponent<Image>();
+        currentCutscene = 0;
         cutsceneImages = cutscenes[currentCutscene].cutsceneImages;
         currentImage = 0;
         image.sprite = cutsceneImages[currentImage].GetComponent<SpriteRenderer>().sprite;
