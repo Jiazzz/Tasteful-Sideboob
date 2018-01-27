@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-    static int health = 100;
+    int health = 100;
+    int lives = 3;
 
     [SerializeField]
     float speed;
@@ -35,6 +36,8 @@ public class Player : MonoBehaviour {
     GameManager gameManager;
 
     bool canMove;
+    bool invincible = false;
+    float invincibleTimer;
 
     Rigidbody2D rb;
 
@@ -47,6 +50,14 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        if (invincible)
+        {
+            invincibleTimer -= Time.deltaTime;
+            if(invincibleTimer <= 0)
+            {
+                invincible = false;
+            }
+        }
         if (Vector2.Distance(otherPlayer.position, transform.position) > gameManager.MaxRange)
         {
             EndGame();
@@ -66,7 +77,11 @@ public class Player : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        StartCoroutine(HandleCollision(collision));
+        if (!invincible)
+        {
+            StartCoroutine(HandleCollision(collision));
+        }
+        
     }
 
     IEnumerator HandleCollision(Collision2D collision)
@@ -109,7 +124,15 @@ public class Player : MonoBehaviour {
         health -= amount;
         if (health <= 0)
         {
-            gameManager.GameOver();
+            lives--;
+            if(lives <= 0)
+            {
+                gameManager.GameOver();
+            }
+            else
+            {
+
+            }
         }
     }
 
@@ -128,5 +151,11 @@ public class Player : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+    }
+
+    public void SetInvincible(int seconds)
+    {
+        invincible = true;
+        invincibleTimer = seconds;
     }
 }
