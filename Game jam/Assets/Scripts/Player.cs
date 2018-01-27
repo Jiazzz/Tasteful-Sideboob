@@ -91,4 +91,22 @@ public class Player : MonoBehaviour {
             gameManager.GameOver();
         }
     }
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("ScreenBounds"))
+        {
+            ScreenBound screenBound = other.GetComponent<ScreenBound>();
+            if(screenBound != null)
+            {
+                rb.velocity = screenBound.PushInDirection(rb);
+            }
+            
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        
+    }
 }

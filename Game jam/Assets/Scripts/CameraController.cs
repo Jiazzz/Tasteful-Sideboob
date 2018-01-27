@@ -15,12 +15,17 @@ public class CameraController : MonoBehaviour {
 
     [SerializeField]
     float cameraSmoothTime = 0.3f;
+
+    [SerializeField]
+    bool scroll = false;
+
     float zoomValue = 1;
 
     Camera mainCamera;
     List<GameObject> players;
     float standardOrthographic;
-    float newOrthographic;    
+    float standardSpeed;
+    bool zooming = false;
 
 	// Use this for initialization
 	void Start ()
@@ -32,13 +37,16 @@ public class CameraController : MonoBehaviour {
             Debug.LogError("No players were found");
         }
         standardOrthographic = mainCamera.orthographicSize;
-        newOrthographic = standardOrthographic;
+        standardSpeed = cameraSpeed;
 	}
 	
 	// Update is called once per frame
 	void LateUpdate ()
     {
-        //ScrollUp(cameraSpeed);
+        if (scroll)
+        {
+            ScrollUp(cameraSpeed);
+        }
         Zoom();
 	}
 
@@ -52,15 +60,27 @@ public class CameraController : MonoBehaviour {
     {
         if (Vector3.Distance(players[0].transform.position, players[1].transform.position) <= maxZoomDistance)
         {
+            cameraSpeed = standardSpeed / 2;
             zoomValue = ZoomValue();
-            mainCamera.orthographicSize = zoomValue * standardOrthographic;
+            if(zoomValue * standardOrthographic < minOrthographic)
+            {
+                mainCamera.orthographicSize = minOrthographic;
+            }
+            else
+            {
+                mainCamera.orthographicSize = zoomValue * standardOrthographic;
+            }
 
             float AvgX = Average(players[0].transform.position.x, players[1].transform.position.x);
             float AvgY = Average(players[0].transform.position.y, players[1].transform.position.y);
 
-            Vector3 newPosition = new Vector3(AvgX, AvgY, transform.position.z);
-            Vector3 velocity = Vector3.zero;
-            transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref velocity, cameraSmoothTime);
+            if (!zooming)
+            {
+                Vector3 newPosition = new Vector3(AvgX, AvgY, transform.position.z);
+                Vector3 velocity = Vector3.zero;
+                transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref velocity, cameraSmoothTime);
+                zooming = true;
+            }
 
         }
     }
