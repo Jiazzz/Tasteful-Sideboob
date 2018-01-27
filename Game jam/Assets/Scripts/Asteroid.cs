@@ -6,14 +6,17 @@ public class Asteroid : MonoBehaviour {
 
     float speed = 2;
 	int damage = 20; 
+	int hp = 40; 
 	
 	[SerializeField]
     GameObject subAsteroidPrefab;
+	
+	//TODO: collision with bullet, hp -= amount
 
 
 	// Update is called once per frame
     void Update() {
-        if (Input.GetButtonDown(fireInput))
+        if (hp <= 0)
         {
             Break();
         }
@@ -25,7 +28,7 @@ public class Asteroid : MonoBehaviour {
 	
 	void Break()
     {
-        bool diag = rand.NextDouble();
+        bool diag = rand.NextDouble() > 0.5;
 		EjectAsteroid(diag, 0);
 		EjectAsteroid(diag, 90);
 		EjectAsteroid(diag, 180);
@@ -34,7 +37,7 @@ public class Asteroid : MonoBehaviour {
 	
 	void EjectAsteroid(bool diag, int angle)
 	{
-		GameObject subAsteroid = Instantiate(subAsteroidPrefab, transform.position, (angle + diag * 45));
+		GameObject subAsteroid = Instantiate(subAsteroidPrefab, transform.position, Quaternion.eulerAngles(angle + diag * 45));
 	}
 
     
