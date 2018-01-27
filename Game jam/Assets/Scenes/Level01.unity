@@ -985,7 +985,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7736fafa229f87648b9770104ff0ef9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cutscene: {fileID: 11400000, guid: 710290d9a0d24614d9596c0c4cec74f6, type: 2}
+  cutscenes:
+  - {fileID: 11400000, guid: 710290d9a0d24614d9596c0c4cec74f6, type: 2}
 --- !u!1 &1678476508 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1611853889638138, guid: 8cdccdccfc2ed304e81af3a9ea88082c,
