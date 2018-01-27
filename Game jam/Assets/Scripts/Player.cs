@@ -58,7 +58,7 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Vector2.Distance(otherPlayer.position, transform.position) > gameManager.MaxRange)
+        if (otherPlayer != null && Vector2.Distance(otherPlayer.position, transform.position) > gameManager.MaxRange)
         {
             EndGame();
         }
@@ -77,7 +77,7 @@ public class Player : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!invincible)
+        if (!invincible && health > 0)
         {
             StartCoroutine(HandleCollision(collision));
         }
@@ -107,6 +107,7 @@ public class Player : MonoBehaviour {
             GetComponent<SpriteRenderer>().enabled = !GetComponent<SpriteRenderer>().enabled;
             yield return new WaitForSeconds(blinkTime);
         }
+        invincible = false;
     }
 
 
@@ -137,8 +138,8 @@ public class Player : MonoBehaviour {
         health -= amount;
         if (health <= 0)
         {
-            //gameManager.RespawnPlayer(this.gameObject, id);
-            //Destroy(gameObject);
+            gameManager.RespawnPlayer(this.gameObject, id);
+            Destroy(gameObject);
         }
     }
 

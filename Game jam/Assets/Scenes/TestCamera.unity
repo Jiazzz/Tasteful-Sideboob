@@ -1258,6 +1258,130 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!1 &990270277
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 990270280}
+  - component: {fileID: 990270279}
+  - component: {fileID: 990270278}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &990270278
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 990270277}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+--- !u!114 &990270279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 990270277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43c7ea8b857f8bf4aba7d27ea96d3961, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletHit: {fileID: 8300000, guid: 6819df643a066934cbb71bfe3daffcee, type: 3}
+  playerHit: {fileID: 8300000, guid: f135fa625ea9346488bf7ddd3229662f, type: 3}
+  source: {fileID: 990270278}
+--- !u!4 &990270280
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 990270277}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.057995837, y: -2.935097, z: 0.20434783}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1006842106
 GameObject:
   m_ObjectHideFlags: 0
@@ -1768,6 +1892,11 @@ Prefab:
       propertyPath: m_Name
       value: Player1
       objectReference: {fileID: 0}
+    - target: {fileID: 114344217580306808, guid: 8cdccdccfc2ed304e81af3a9ea88082c,
+        type: 2}
+      propertyPath: shootClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 03449ffecce42ed43a3eb15c72bc9a36, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8cdccdccfc2ed304e81af3a9ea88082c, type: 2}
   m_IsPrefabParent: 0
@@ -2325,7 +2454,17 @@ Prefab:
       propertyPath: gameManagerObject
       value: 
       objectReference: {fileID: 1344342393}
-    m_RemovedComponents: []
+    - target: {fileID: 4319458862865328, guid: f97e8542cc2dbf14d8302ad2959bf37d, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114079442446559230, guid: f97e8542cc2dbf14d8302ad2959bf37d,
+        type: 2}
+      propertyPath: shootClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ff6bbf733733de64c936dcc12440848c, type: 3}
+    m_RemovedComponents:
+    - {fileID: 60307234209215652, guid: f97e8542cc2dbf14d8302ad2959bf37d, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: f97e8542cc2dbf14d8302ad2959bf37d, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1808201664
